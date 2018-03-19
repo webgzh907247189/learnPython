@@ -112,7 +112,7 @@ var arrLike = {
     '0': 'foo',
     '1': 'bar',
     '2': 'baz',
-    'lengh': 3
+    'lenth': 3
 }
 
 forEach(someArr, (v) => {
@@ -133,6 +133,12 @@ forEach(arrLike, (v.key) => {
 // bar
 // baz
 ```
+function forEach(){
+    let [target,fn] = Array.from(arguments)
+    Array.from(target,fn)
+}
+
+
 
 ### 5. sum
 
@@ -162,6 +168,17 @@ for(var idx = 0; idx < times; idx++) {
 }
 sum(...args) // 如果 times 随机为 3，则输出结果为 3 。
 ```
+function sun(){
+    return Array.from(arguments).reduce((result,item)=>{
+        return result += item
+    },0)
+}
+
+function sum(){
+    return Array.from(arguments,function(item){
+        return this.sum += item
+    },{sum: 0})[arguments.length - 1] || 0
+}
 
 ### 6. 类型判断
 
@@ -189,3 +206,10 @@ getType(() => {}); //"function"
 
 //...
 ```
+function getType(params1){
+    let str = typeof(params1)
+    if(Object.is(typeof(params1),'object')){
+        return Array.isArray(params1) ? "Array" : Object.is(params1,null) ? null : 'Object'
+    }
+    return str
+}
