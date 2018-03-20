@@ -164,10 +164,10 @@ function forEach(){
 
 function forEach(){
     let [target,fn] = Array.from(arguments)
-    Array.from(target).map(fn)
+    for (let iterm of Array.from(target)){
+    	fn()
+    }
 }
-
-
 
 
 /**
