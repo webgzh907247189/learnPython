@@ -83,6 +83,56 @@ get(someObj, 'c'); // undefined
 get(someObj, 'a.b'); // 123
 get(someObj, 'a.b.c.d'); // undefined
 ```
+function getValue(target,key,value){
+    let obj = new Proxy(target,{
+        set(target,key,value){
+            return target[key] = '1111'
+        },
+        get(target,key){
+            return target[key] = '222'
+        }
+    })
+    return obj[key] = value
+
+}
+var obj = {name: '1111'}
+getValue(obj,'name','88888')
+
+
+function getValue(target,key){
+    let obj = new Proxy(target,{
+        set(target,key,value){
+            return target[key] = '1111'
+        },
+        get(target,key){
+            return target[key]
+        }
+    })
+    return obj[key]
+}
+var someObj = {a: {b: 123},b: 456};
+getValue(someObj,'name')
+
+
+function getValue(target,key){
+    let obj = new Proxy(target,{
+        get(target,key){
+            let keys = key.split('.')
+            return keys.map((item,index)=>{
+
+                <!-- if(target){
+                    return target = target[item]
+                 }
+                 return undefined -->
+
+                 return target && (target = target[item]) || undefined
+            })[keys.length-1]
+        }
+    })
+    return obj[key]
+}
+var someObj = {a: {b: 123},b: 456};
+getValue(someObj,'a.b.c')
 
 ### 4. forEach
 
@@ -112,7 +162,7 @@ var arrLike = {
     '0': 'foo',
     '1': 'bar',
     '2': 'baz',
-    'lengh': 3
+    'lenth': 3
 }
 
 forEach(someArr, (v) => {
@@ -133,6 +183,12 @@ forEach(arrLike, (v.key) => {
 // bar
 // baz
 ```
+function forEach(){
+    let [target,fn] = Array.from(arguments)
+    Array.from(target,fn)
+}
+
+
 
 ### 5. sum
 
@@ -162,6 +218,17 @@ for(var idx = 0; idx < times; idx++) {
 }
 sum(...args) // 如果 times 随机为 3，则输出结果为 3 。
 ```
+function sun(){
+    return Array.from(arguments).reduce((result,item)=>{
+        return result += item
+    },0)
+}
+
+function sum(){
+    return Array.from(arguments,function(item){
+        return this.sum += item
+    },{sum: 0})[arguments.length - 1] || 0
+}
 
 ### 6. 类型判断
 
@@ -189,3 +256,10 @@ getType(() => {}); //"function"
 
 //...
 ```
+function getType(params1){
+    let str = typeof(params1)
+    if(Object.is(typeof(params1),'object')){
+        return Array.isArray(params1) ? "Array" : Object.is(params1,null) ? null : 'Object'
+    }
+    return str
+}
