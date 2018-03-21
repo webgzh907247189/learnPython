@@ -10,6 +10,13 @@
 // equal(0.2 + 0.1 , 0.3) // true
 // equal(0.2 * 0.1 , 0.02) // true
 
+function equal(arg1,arg2){
+    return Object.is(Math.trunc(arg1),Math.trunc(arg2))   //法用于去除一个数的小数部分，返回整数部分
+}
+
+function equal(arg1,arg2){
+    return Math.abs(arg1 - arg2) < Number.EPSILON // JavaScript 能够表示的最小精度 （小数点后面有连续 51 个零。这个值减去 1 之后，就等于 2 的 -52 次方）
+}
 
 
 /**
@@ -22,7 +29,10 @@
 var source = `Since his code is opensource, I have decided to fix it and integrate it into my extension SteemPlus. Our code structures being very different, this was a two men jobs for several weeks but we're finally done.`
 dictionary(source);
 // ["A", "And", "Being"... "Since", "SteemPlus.", "Structures", "This", "To", "Two", "Very", "Was", "We're", "Weeks"]
-
+function dictionary(str){
+    return [...new Set(str.split(' '))].map( item => `${item[0].toUpperCase()}${item.slice(1)}` ).sort()
+}
+//看首字母？？？？？？
 
 
 
@@ -51,12 +61,11 @@ function getValue(target,key){
     return obj[key]
 }
 
-function getValue(target,key){      //?????????
+function getValue(target,key){      
     let obj = new Proxy(target,{
         get(target,key){
             return key.split('.').reduce((result,item)=>{
-                (result = result[item]) || undefined
-                return result
+                return result && (result = result[item]) || undefined
             },target)
         }
     })
@@ -77,15 +86,12 @@ function getValue() {
     }).slice(-1)[0]
 }
 
-function getValue(target,key){
+function getValue(target,key){               //??????????????????
     Object.defineProperty(target,key,{
-        get: ()=>{
+        get(){
             return key.split('.').map((item,index)=>{
                 return target && (target = target[item]) || undefined
             }).pop()
-        } || undefined,
-        set(){
-
         }
     })
     return target[key]
