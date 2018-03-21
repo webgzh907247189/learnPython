@@ -1,28 +1,3 @@
-var someObj = {
-    a: {
-        b: 123
-    },
-    b: 456
-};
-get(someObj, 'b'); // 456
-get(someObj, 'c'); // undefined
-get(someObj, 'a.b'); // 123
-get(someObj, 'a.b.c.d'); // undefined
-
-function get() {
-	let [target,keys=''] = Array.from(arguments) // ??
-	let num;
-	return keys.split('.').map((item,index)=>{
-		let value = Reflect.get(target,item)
-		if(value && Object.keys(value).length){
-			target = value
-		}
-		num = index
-		return value 
-	})[num]
-
-
-
 /**
  * @param {Number} x 将要比较的数值。
  * @param {Number} y 将要比较的数值。
@@ -62,50 +37,27 @@ dictionary(source);
 // get(someObj, 'a.b'); // 123
 // get(someObj, 'a.b.c.d'); // undefined
 
-function getValue(target,key,value){
-    let obj = new Proxy(target,{
-        set(target,key,value){
-            return target[key] = '1111'
-        },
-        get(target,key){
-            return target[key] = '222'
-        }
-    })
-    return obj[key] = value
 
-}
-var obj = {name: '1111'}
-getValue(obj,'name','88888')
 
 
 function getValue(target,key){
     let obj = new Proxy(target,{
-        set(target,key,value){
-            return target[key] = '1111'
-        },
         get(target,key){
-            return target[key]
+            return key.split('.').map((item,index)=>{
+                return target && (target = target[item]) || undefined
+            }).pop()
         }
     })
     return obj[key]
 }
-var someObj = {a: {b: 123},b: 456};
-getValue(someObj,'name')
 
-
-function getValue(target,key){
+function getValue(target,key){      //?????????
     let obj = new Proxy(target,{
         get(target,key){
-            let keys = key.split('.')
-            return keys.map((item,index)=>{
-
-                // if(target){
-                //     return target = target[item]
-                // }
-                // return undefined
-
-                return target && (target = target[item]) || undefined
-            })[keys.length-1]
+            return key.split('.').reduce((result,item)=>{
+                (result = result[item]) || undefined
+                return result
+            },target)
         }
     })
     return obj[key]
@@ -113,6 +65,31 @@ function getValue(target,key){
 var someObj = {a: {b: 123},b: 456};
 getValue(someObj,'a.b.c')
 
+
+function getValue() {
+    let [target,keys=''] = [].slice.call(arguments)
+    return keys.split('.').map((item,index)=>{
+        let value = Reflect.get(target,item)
+        if(value && Object.keys(value).length){
+            target = value
+        }
+        return value 
+    }).slice(-1)[0]
+}
+
+function getValue(target,key){
+    Object.defineProperty(target,key,{
+        get: ()=>{
+            return key.split('.').map((item,index)=>{
+                return target && (target = target[item]) || undefined
+            }).pop()
+        } || undefined,
+        set(){
+
+        }
+    })
+    return target[key]
+}
 
 /**
  * @param {Array|Object} arr 目标数组或类数组。
@@ -131,7 +108,7 @@ var arrLike = {
     '0': 'foo',
     '1': 'bar',
     '2': 'baz',
-    'lenth': 3
+    length: 3
 }
 
 forEach(someArr, (v) => {
@@ -152,6 +129,7 @@ forEach(arrLike, (v.key) => {
 // bar
 // baz
 
+
 function forEach(){
     let [target,fn] = Array.from(arguments)
     Array.from(target,fn)
@@ -163,9 +141,9 @@ function forEach(){
 }
 
 function forEach(){
-    let [target,fn] = Array.from(arguments)
-    for (let iterm of Array.from(target)){
-    	fn()
+    let [target,fn] = [].slice.call(arguments)
+    for (let item of Array.from(target)){
+    	fn(item)
     }
 }
 
@@ -228,17 +206,17 @@ getType(null); //"null"
 getType(() => {}); //"function"
 
 function getType(params){
-    let str = typeof(params)
     if(Object.is(typeof(params),'object')){
         return Array.isArray(params) ? "Array" : Object.is(params,null) ? null : 'Object'
     }
-    return str
+    return typeof(params)
 }
 
 function getType(params){
     let str = typeof(params)
-    return Object.is(typeof(params),'object')) && Array.isArray(params) && "Array" || Object.is(params,null) && null || 'Object'
+    return ( Object.is(typeof(params),'object') && Array.isArray(params) && "Array" || Object.is(params,null) || null || 'Object' ) || typeof(params)
 }
+
 
 function getType(params){
     return {
@@ -247,4 +225,40 @@ function getType(params){
         'function': 'function',
         'object': Array.isArray(params) ? "Array" : Object.is(params,null) ? null : 'Object'
     }[typeof(params)]
+}
+
+{
+    class Chain{
+        constrcutor(fn,successor){
+            this.fn = fn
+            this.successor = null
+        }
+
+        setNextSuccessor(){
+
+        }
+
+        passRequest(){
+
+        }
+    }
+
+    function getType(){
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+function getDownUrl(url,paraObj={}){
+    return Object.keys(paraObj).reduce((result,item)=>{
+        return result += paraObj[item] && `${item}=${encodeURIComponent(paraObj[item])}&` || ''
+    },`${url}?`).slice(0,-1)
 }
