@@ -13,6 +13,10 @@
 // equal(0.2 * 0.1 , 0.02) // true
 
 function equal(arg1,arg2){
+    return Math.abs(arg1 - arg2).toFixed(2) == 0
+}
+
+function equal(arg1,arg2){
     return Object.is(Math.trunc(arg1),Math.trunc(arg2))   //法用于去除一个数的小数部分，返回整数部分
 }
 
