@@ -1,3 +1,5 @@
+// https://cloud.tencent.com/developer/labs/gallery?page=2
+
 /**
  * @param {Number} x 将要比较的数值。
  * @param {Number} y 将要比较的数值。
@@ -86,7 +88,12 @@ function getValue() {
     }).slice(-1)[0]
 }
 
-function getValue(target,key){               //??????????????????
+function getValue(target,key){
+    let keys = key.split('.')    
+    if(keys.length == 1){
+        return target[key]
+    }
+    
     Object.defineProperty(target,key,{
         get(){
             return key.split('.').map((item,index)=>{
