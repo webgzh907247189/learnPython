@@ -1,5 +1,7 @@
 // https://cloud.tencent.com/developer/labs/gallery?page=2
 
+
+
 /**
  * @param {Number} x 将要比较的数值。
  * @param {Number} y 将要比较的数值。
@@ -25,6 +27,14 @@ function equal(arg1,arg2){
 }
 
 
+
+
+
+
+
+
+
+
 /**
  * @param {String} source 源段落文本。
  * @param {?} 若需要其他参数，可自行设计。
@@ -38,7 +48,22 @@ dictionary(source);
 function dictionary(str){
     return [...new Set(str.split(' '))].map( item => `${item[0].toUpperCase()}${item.slice(1)}` ).sort()
 }
-//看首字母？？？？？？
+
+function dictionary(str){
+    return [...new Set( str.split(' ').reduce((result,item)=>{
+        return result = [...result,`${item[0].toUpperCase()}${item.slice(1)}`]
+    },[]) )].sort()
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -55,7 +80,6 @@ function dictionary(str){
 
 
 
-
 function getValue(target,key){
     let obj = new Proxy(target,{
         get(target,key){
@@ -67,6 +91,7 @@ function getValue(target,key){
     return obj[key]
 }
 
+
 function getValue(target,key){      
     let obj = new Proxy(target,{
         get(target,key){
@@ -77,8 +102,6 @@ function getValue(target,key){
     })
     return obj[key]
 }
-var someObj = {a: {b: 123},b: 456};
-getValue(someObj,'a.b.c')
 
 
 function getValue() {
@@ -91,6 +114,7 @@ function getValue() {
         return value 
     }).slice(-1)[0]
 }
+
 
 function getValue(target,key){
     let keys = key.split('.')    
@@ -107,6 +131,11 @@ function getValue(target,key){
     })
     return target[key]
 }
+
+
+
+
+
 
 /**
  * @param {Array|Object} arr 目标数组或类数组。
@@ -139,7 +168,7 @@ forEach(anotherArr, (v) => {
 });
 // foo
 // bar
-forEach(arrLike, (v.key) => {
+forEach(arrLike, (v) => {
     console.log(v)
 });
 // foo
@@ -163,6 +192,12 @@ function forEach(){
     	fn(item)
     }
 }
+
+
+
+
+
+
 
 
 /**
@@ -209,10 +244,14 @@ function sum(){
 
 
 
+
+
+
+
 /**
  * @param {ALL} target 累加数或字符串。
  * @param {?} 若需要其他参数，可自行设计。
- * @returns {String} 目标的类型         ?指责连
+ * @returns {String} 目标的类型         
 */
 
 getType(1); //"Number"
@@ -229,9 +268,13 @@ function getType(params){
     return typeof(params)
 }
 
+
 function getType(params){
-    let str = typeof(params)
-    return ( Object.is(typeof(params),'object') && Array.isArray(params) && "Array" || Object.is(params,null) || null || 'Object' ) || typeof(params)
+    function getWord(str){
+        return `${str[0].toUpperCase()}${str.slice(1)}`
+    }
+
+    return Array.isArray(params) && "Array" || !Object.is(params,null) && getWord(typeof(params)) || null
 }
 
 
@@ -244,24 +287,52 @@ function getType(params){
     }[typeof(params)]
 }
 
-{
-    class Chain{
-        constrcutor(fn,successor){
+
+{   
+    function getTypeArray(params){
+        return Array.isArray(params) && 'Array' || 'nextSuccessor'
+    }
+
+    function getTypeNull(params){
+        return !Object.is(params,null) && 'nextSuccessor' || null
+    }
+
+    function getTypeOther(params){
+        function getWord(str){
+            return `${str[0].toUpperCase()}${str.slice(1)}`
+        }
+        return getWord(typeof(params))
+    }
+
+    class accusationChain{
+        constructor(fn,successor){
             this.fn = fn
             this.successor = null
         }
 
-        setNextSuccessor(){
-
+        setNextSuccessor(successor){
+            return this.successor = successor;
         }
 
         passRequest(){
+            let result = this.fn.apply(this,arguments)
 
+            if(result == 'nextSuccessor'){
+                return this.successor.passRequest.apply(this.successor,arguments)
+            }
+            return result
         }
     }
 
-    function getType(){
+    let getTypeArrayChain = new accusationChain(getTypeArray)
+    let getTypeNullChain = new accusationChain(getTypeNull)
+    let getTypeOtherChain = new accusationChain(getTypeOther)
 
+    getTypeArrayChain.setNextSuccessor(getTypeNullChain)
+    getTypeNullChain.setNextSuccessor(getTypeOtherChain)
+
+    function getType(params){
+        return getTypeArrayChain.passRequest(params)
     }
 }
 
