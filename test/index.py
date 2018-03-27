@@ -54,3 +54,20 @@ def count1():
 f1, f2, f3 = count1()
 print(f1(),f2(),f3())
 
+
+import functools
+def log(text):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kw):
+            print('%s %s():' % (text, func.__name__))
+            return func(*args, **kw)
+        return wrapper
+    return decorator
+
+@log('1111')
+def now():
+    print('2015-3-25')
+
+now()
+print(now.__name__)   # now<不加任何东西的name>     wrapper <添加@functools.wraps(func)显示>

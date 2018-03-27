@@ -238,9 +238,36 @@ function sum(){
     return sum
 }
 
+function sum(){
+    let sum = 0
+    let next = true
+    let resultArr = Array.from(arguments).entries()
+    while(next){
+        let result = resultArr.next()
+        if(!result.done){
+            sum += result.value[1]
+        }else{
+            next = false
+        }
+    }
+    return sum
+}
 
-
-
+/*  ????????????  */
+function sortArr(arr){
+    var goNext = true;
+    var entries = arr.entries();
+    while(goNext){
+        var result = entries.next();
+        if(result.done !== true){
+            result.value[1].sort((a,b) => a-b);
+            goNext = true;
+        }else{
+            goNext = false;
+        }
+    }
+    return arr;
+}
 
 
 
