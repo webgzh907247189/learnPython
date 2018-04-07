@@ -244,11 +244,13 @@ function sum(){
     let resultArr = Array.from(arguments).entries()
     while(next){
         let result = resultArr.next()
-        if(!result.done){
-            sum += result.value[1]
-        }else{
-            next = false
-        }
+        // if(!result.done){
+        //     sum += result.value[1]
+        // }else{
+        //     next = false
+        // }
+
+        result.done && (next = false) || (sum += result.value[1])
     }
     return sum
 }
