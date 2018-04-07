@@ -2,6 +2,7 @@
 
 
 
+
 /**
  * @param {Number} x 将要比较的数值。
  * @param {Number} y 将要比较的数值。
@@ -137,6 +138,8 @@ function getValue(target,key){
 
 
 
+
+
 /**
  * @param {Array|Object} arr 目标数组或类数组。
  * @param {Function} 循环操作。
@@ -255,7 +258,11 @@ function sum(){
     return sum
 }
 
-/*  ????????????  https://www.jianshu.com/p/a8b4eaa21f98*/
+
+
+
+/*  ????????????  https://www.jianshu.com/p/a8b4eaa21f98
+http://es6.ruanyifeng.com/#docs/array#%E6%95%B0%E7%BB%84%E5%AE%9E%E4%BE%8B%E7%9A%84-entries%EF%BC%8Ckeys-%E5%92%8C-values*/
 function sortArr(arr){
     var goNext = true;
     var entries = arr.entries();
