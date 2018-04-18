@@ -20,6 +20,9 @@ function filter(arr,cb){
 
 
 
+
+
+
 function getElementsByClassName(HTMLElement,className){
 	return Array.from(document.querySelector(HTMLElement).querySelectorAll(className))
 }
@@ -45,15 +48,49 @@ function getBoundObj(obj,arr){
 	return object
 }
 
-Object.defineProperty(target,key,{
-    get(){
-        return key.split('.').map((item,index)=>{
-            return target && (target = target[item]) || undefined
-        }).pop()
-    }
-})
+// Object.defineProperty(target,key,{
+//     get(){
+//         return key.split('.').map((item,index)=>{
+//             return target && (target = target[item]) || undefined
+//         }).pop()
+//     }
+// })
 
 
+
+
+function deepClone(targetObj,obj = {}){
+	for (let item of Object.keys(targetObj)){
+		if(typeof targetObj[item] === 'object'){  //keyB.keyBB.constructor 正则
+			obj[item] = Array.isArray(obj[item]) ? [] : {}
+			deepClone(targetObj[item],obj[item])
+		}else{
+			obj[item] = targetObj[item]
+		}
+	}
+	return obj
+}
+function assign(targetObj,sourceObj,isDeepCopy = false){
+	if(!isDeepCopy){
+		return Object.assign(targetObj,sourceObj)
+	}else{	
+		//深拷贝
+		return deepClone(Object.assign(targetObj,sourceObj))
+	}
+}
+
+
+function assign(targetObj,sourceObj,isDeepCopy = false){
+	if(!isDeepCopy){
+		return {
+			...targetObj,
+			...sourceObj
+		}
+	}else{	
+		//深拷贝
+		return deepClone(Object.assign(targetObj,sourceObj))
+	}
+}
 
 
 
