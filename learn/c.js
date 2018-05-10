@@ -31,12 +31,17 @@ $.ajax({
 
 
 
-
-let delay = 500
 //2 函数防抖
-{
+function getList(){
+	console.log('获取到数据了')
+}
+
+let delay = 1000
+
+
+function getDate(){
 	let timer = null
-	function getDate(){
+	return function(){
 		clearTimeout(timer)
 
 		timer = setTimeout(function(){
@@ -44,19 +49,23 @@ let delay = 500
 		},delay)
 	}
 }
+let getDateList = getDate()
+
 
 // 函数节流
-{
+function getDate(){
 	let isFetch = true
-	function getDate(){
+	return function(){
 		if(!isFetch){
 			return
 		}
 
 		isFetch = false
+
 		setTimeout(function(){
 			getList()
 			isFetch = true
 		},delay)
 	}
 }
+let getDateList = getDate()
