@@ -1,3 +1,38 @@
+//1  Promise.race
+function timeout(){
+	return new Promise((resolve,reject)=>{
+		setTimeout(function(){
+			reject(new Error('超时'))
+		},5000)
+	})
+}
+
+function fetch(){
+	return new Promise((resolve,reject)=>{
+		setTimeout(function(){
+			resolve('111111111111')
+		},2000)
+	})
+}
+
+await Promise.race([fetch(),timeout()])
+
+
+$.ajax({
+	url : 'xxx',
+	timeout : 3000,
+	error(xhr,textStatus){
+		console.log(`error: ${textStatus}`);
+	},
+	seccess(data){
+		console.log(`${data}`)
+	}
+});
+
+
+
+
+let delay = 500
 //2 函数防抖
 {
 	let timer = null
@@ -6,7 +41,7 @@
 
 		timer = setTimeout(function(){
 			getList()
-		},500)
+		},delay)
 	}
 }
 
@@ -22,9 +57,6 @@
 		setTimeout(function(){
 			getList()
 			isFetch = true
-		},500)
+		},delay)
 	}
 }
-
-
-//代理模式
