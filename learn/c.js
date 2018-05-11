@@ -18,16 +18,16 @@ function fetch(){
 await Promise.race([fetch(),timeout()])
 
 
-$.ajax({
-	url : 'xxx',
-	timeout : 3000,
-	error(xhr,textStatus){
-		console.log(`error: ${textStatus}`);
-	},
-	seccess(data){
-		console.log(`${data}`)
-	}
-});
+// $.ajax({
+// 	url : 'xxx',
+// 	timeout : 3000,
+// 	error(xhr,textStatus){
+// 		console.log(`error: ${textStatus}`);
+// 	},
+// 	seccess(data){
+// 		console.log(`${data}`)
+// 	}
+// });
 
 
 
@@ -37,6 +37,8 @@ function getList(){
 }
 
 let delay = 1000
+
+
 
 
 function getDate(){
