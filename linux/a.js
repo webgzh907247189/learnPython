@@ -25,6 +25,7 @@ https://www.cnblogs.com/cbreeze/p/6080872.html
 :w   保存文件，不退出vi命令
 
 
+linux修改文件名  mv xxx  yyy    ->   完成xxx的文件名修改为yyy
 
 
 查看 cat a.js | grep '关键字查找'
@@ -114,3 +115,17 @@ sudo service mongod start  启动mongo
 sudo service mongod restart 重启mongo
 
 
+sudo apt-get update
+sudo apt-get install nginx
+
+
+nginx -v
+cd /etc/nginx 
+cd conf.d
+
+sudo nginx -t  检测有没有错误
+
+sudo nginx -s reload
+sudo service nginx reload
+
+nginx.conf -> Basic Settings  ->  server_tokens off;  隐藏服务器上的nginx信息
