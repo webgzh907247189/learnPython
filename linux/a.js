@@ -112,3 +112,5 @@ mondodb
 sudo service mongod stop  关闭mongo
 sudo service mongod start  启动mongo
 sudo service mongod restart 重启mongo
+
+
