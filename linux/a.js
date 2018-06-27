@@ -41,7 +41,7 @@ sudo service ssh restart
 
 
 df -h 查看磁盘使用情况
-cd ~/xxx 进入目录
+cd ~/xxx 进入根目录
 
 
 创建的新用户配置权限
@@ -108,11 +108,39 @@ ctrl+D 退出puty
 cat /proc/cpuinfo |grep "processor"|sort -u|wc -l   查看服务器的核数
 
 
-mondodb
+mondodb  (官网搜所 install on utuntu)
 
 sudo service mongod stop  关闭mongo
 sudo service mongod start  启动mongo
 sudo service mongod restart 重启mongo
+
+sudo mongo --port xxx    以xxx端口启动mongo数据库
+
+show dbs                          展示所以的dbs
+use xxx                           使用哪个db
+db.getCollection('xxx').find({})  使用哪个表去查询数据
+
+
+
+mongod --dbpath D:\MongoDB\data   window 启动mongo
+
+mongodump -h 127.0.0.1:27017 -d  test-web -o test  备份本地数据库  （-d xxx -o yyy  xxx是数据库的名字  yyy是导出之后的名字)
+
+
+mongorestore --host 127.0.0.1:端口 -d test ./gzh/db/test  (导入数据)
+
+查看mogodb的日志   cat /var/log/mongodb/mobgod.log
+
+
+
+tar zcvf xxx.tar.gz  yyy  (xxx 打包之后的名字, yyy原文件夹名字)    压缩成为tar包
+tar xvf xxx.tar.gz  解压缩tar包
+
+scp -P 10001 ./test.tar.gz  ubuntu@ip:/home/ubuntu/gzh/db   本地文件上传服务器()
+scp -P 10001 .xxx/yyy/test.tar.gz  服务器用户名@服务器ip:/home/服务器用户名/fff/zzz   本地文件上传服务器  (前面的为路径)
+
+
+
 
 
 sudo apt-get update
@@ -125,7 +153,14 @@ cd conf.d
 
 sudo nginx -t  检测有没有错误
 
+sudo nginx -s stop  停止nginx服务
+
 sudo nginx -s reload
 sudo service nginx reload
 
+
 nginx.conf -> Basic Settings  ->  server_tokens off;  隐藏服务器上的nginx信息
+
+
+
+tasklist | more    window 查看pid
