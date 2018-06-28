@@ -177,8 +177,8 @@ console.log(boss1.returnthis())
 console.log(boss2.returnthis())
 console.log(boss3.returnthis())
 //boss1
-//
-//
+//boss1
+//报错
 
 
 
@@ -222,7 +222,7 @@ new showThis.call(boss1) // boss1？  报错
 
 var boss1showThis = showThis.bind(boss1)
 boss1showThis() // boss1
-new boss1showThis() //boss1
+new boss1showThis() //showthis
 
 
 
@@ -231,7 +231,8 @@ new boss1showThis() //boss1
 function callback (cb) {
 	cb()
 }
-callback(() => { console.log(this) }) // ?
+callback(() => { console.log(this) }) // window
+
 var boss1 = {
 	name: 'boss1',
 	callback: callback,
@@ -239,5 +240,5 @@ var boss1 = {
 	  callback(() => { console.log(this) })
 	}
 }
-boss1.callback(() => { console.log(this) }) // ?
-boss1.callback2(() => { console.log(this) }) // ?
+boss1.callback(() => { console.log(this) }) //window
+boss1.callback2(() => { console.log(this) }) // boss1
