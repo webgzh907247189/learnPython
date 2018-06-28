@@ -117,7 +117,11 @@ sudo service mongod restart 重启mongo
 sudo mongo --port xxx    以xxx端口启动mongo数据库
 
 show dbs                          展示所以的dbs
+
+show tables                       查看存在哪些表
 use xxx                           使用哪个db
+
+db.xxx.find({})                   使用哪个表去查询数据
 db.getCollection('xxx').find({})  使用哪个表去查询数据
 
 
@@ -127,7 +131,15 @@ mongod --dbpath D:\MongoDB\data   window 启动mongo
 mongodump -h 127.0.0.1:27017 -d  test-web -o test  备份本地数据库  （-d xxx -o yyy  xxx是数据库的名字  yyy是导出之后的名字)
 
 
-mongorestore --host 127.0.0.1:端口 -d test ./gzh/db/test  (导入数据)
+mongorestore --host 127.0.0.1:端口 -d   数据库名字 ./gzh/db/test  (导入数据)
+
+mongo --host 127.0.0.1:端口 数据库名字 --eval "db.dropDatabase()"  (删除数据库)
+
+
+db.createUser({user: 'xxx',pwd: 'xxx',roles: [{role: 'userAdminAnyDatabase',db: 'admin'}]})  配置数据库的访问权限用户
+db.auth('xxx','xxx')       授权                    
+
+
 
 查看mogodb的日志   cat /var/log/mongodb/mobgod.log
 
