@@ -221,8 +221,8 @@ showThis.call(boss1) // boss1
 new showThis.call(boss1) // boss1？  报错
 
 var boss1showThis = showThis.bind(boss1)
-boss1showThis() // 报错  
-new boss1showThis() // ？
+boss1showThis() // boss1
+new boss1showThis() //boss1
 
 
 
