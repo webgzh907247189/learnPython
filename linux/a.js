@@ -83,7 +83,7 @@ pm2 show xxx    或者 # pm2 info xxx    查看进程详细信息
 
 
 pm2 restart all                     #重启PM2列表中所有的进程
-pm2 restart xxx                       #重启PM2列表中进程为0的进程
+pm2 restart xxx                     #重启PM2列表中进程为0的进程
 
 
 PM2 reload xxx
