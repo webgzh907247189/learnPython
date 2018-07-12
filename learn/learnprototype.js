@@ -120,7 +120,7 @@ function Animal(){
 }
 Animal.prototype.str = '123';
 function Cat(name,color){
-　　　　Animal.apply(this, arguments);
+　　　　Animal.apply(this, arguments);   //只是在此处执行，无继承关系
 　　　　this.name = name;
 　　　　this.color = color;
 }
@@ -177,6 +177,6 @@ console.log(cat1.str);
 //123
 
 console.log(Animal.prototype.constructor);
-//Cat
+//Cat？？？
 
 
