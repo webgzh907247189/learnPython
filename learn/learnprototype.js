@@ -151,7 +151,7 @@ console.log(cat1.species);
 //动物
 
 console.log(cat1.str); 
-//123
+//undefined
 
 console.log(animal.str); 
 //123
@@ -177,6 +177,6 @@ console.log(cat1.str);
 //123
 
 console.log(Animal.prototype.constructor);
-//Function
+//Cat
 
 
