@@ -176,3 +176,4 @@ nginx.conf -> Basic Settings  ->  server_tokens off;  隐藏服务器上的nginx
 
 
 tasklist | more    window 查看pid
+netstat -ano|findstr xxx   查看xxx端口的启动服务情况
