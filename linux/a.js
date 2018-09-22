@@ -9,7 +9,7 @@ find -name xxx 查找文件夹
 
 创建： 
 编辑完成后按ESC，然后输入:q就是退出;还有:wq是保存后退出，加感叹号是表示强制
-
+touch aa.js  创建一个文件
 
 换行:
 ESC + i + enter
