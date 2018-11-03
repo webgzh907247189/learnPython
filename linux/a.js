@@ -26,6 +26,8 @@ https://www.cnblogs.com/cbreeze/p/6080872.html
 
 
 linux修改文件名  mv xxx  yyy    ->   完成xxx的文件名修改为yyy
+cp xxx ./zz/ff yyy 文件拷贝
+cp xxx -R ./zz/ff yyy 文件夹拷贝
 
 
 查看 cat a.js | grep '关键字查找'
