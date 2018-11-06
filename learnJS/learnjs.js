@@ -122,9 +122,9 @@ function yideng() {
  * 2 xxx  报错
  */
 
-10 - parseInt(x/100 *10)
-
-
+ 
+var x = 50
+10 - parseInt(x/100*10)
 
 
 var a = 'abc'
@@ -243,5 +243,5 @@ yideng.method(fn, 1);
 
 /**
  * 10
- * 5 xxx 2
+ * 2  arguments 指的是实参的长度  ->  函数的this指向 arguments
  */
