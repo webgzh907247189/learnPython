@@ -80,7 +80,21 @@ function dictionary(str){
 // get(someObj, 'a.b.c.d'); // undefined
 
 
+{
+    const deepAttr = { a: { b: { c: 15 } } };
+    function pluckDeep(str){
+        let strArr = str.split('.')
+        return function(obj){
+            return strArr.reduce((result,item)=>{
+                // result = result[item]
+                // return result
+                return result = result[item],result
+            },obj)
+        }
+    }
 
+    pluckDeep("a.b.c")(deepAttr);
+}
 function getValue(target,key){
     let obj = new Proxy(target,{
         get(target,key){
