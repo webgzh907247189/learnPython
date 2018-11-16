@@ -1,3 +1,13 @@
+taskkill /f /im *.exe      /f是指定要强制终止进程，/im（im是image name）是指定要终止的进程的图像名
+
+
+
+tasklist | more    window 查看pid
+netstat -ano|findstr xxx   查看xxx端口的启动服务情况(在process启动子进程服务)
+
+
+
+
 sudo adduser xxx  //创建用户
 
 sudo visudo
@@ -184,8 +194,3 @@ sudo service nginx reload
 
 
 nginx.conf -> Basic Settings  ->  server_tokens off;  隐藏服务器上的nginx信息
-
-
-
-tasklist | more    window 查看pid
-netstat -ano|findstr xxx   查看xxx端口的启动服务情况(在process启动子进程服务)
