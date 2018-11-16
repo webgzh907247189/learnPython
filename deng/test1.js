@@ -48,7 +48,7 @@
 	this.a = 20; 
 	var test = {    
 		a: 40,
-		init:()=>{   
+		init:()=>{
 			console.log(this.a);        
 			function go() {            
 				this.a = 60;            
@@ -156,11 +156,57 @@
     	return 3;    
 	});
 	const mergePromise = async (ajaxArray) =>{
-		let resultlist = []
-		for(let item of ajaxArray){
-			resultlist = [..resultlist,await item()]
-		}
-		return resultlist
+		// let resultlist = []
+		// for(let item of ajaxArray){
+		// 	resultlist = [..resultlist,await item()]
+		// }
+		// return resultlist
+
+		return ajaxArray.reduce((result,item)=>{
+			return result.then((d)=>{
+				item()
+			})
+		},Promise.resolve())
+
+	};
+	mergePromise([ajax1, ajax2, ajax3]).then(data => {    
+		console.log("done");
+		console.log(data);
+	});
+	// 执行结果为： 1  2  3 done [1,2,3] 
+}
+
+{
+	const timeout = ms => new Promise((resolve, reject) => {        
+		setTimeout(() => {
+			resolve();
+		}, ms);
+	});
+	const ajax1 = () => timeout(2000).then(() => {
+        console.log("1");        
+        return 1;   
+    });
+    const ajax2 = () => timeout(1000).then(() => {        
+    	console.log("2");        
+    	return 2;    
+    }); 
+    const ajax3 = () => timeout(2000).then(() => {        
+    	console.log("3");        
+    	return 3;    
+	});
+	const mergePromise =  (ajaxArray) =>{
+		let arr = [] 
+
+		return ajaxArray.reduce((result,item)=>{
+			return result.then((d)=>{
+				arr = [...arr,d]
+				return item()
+			})
+		},Promise.resolve('')).then((d)=>{
+			return [...arr,d].filter((item)=>{
+				return item
+			})
+		})
 	};
 	mergePromise([ajax1, ajax2, ajax3]).then(data => {    
 		console.log("done");
@@ -238,7 +284,7 @@
 	for (var i = 0; i < 3; i++) {    
 		var pusher = {            
 			value: "item"+i        
-		},tmp;    
+		},tmp;  
 		if (i !== 2) {        
 			tmp = []        
 			pusher.children = tmp    
