@@ -21,6 +21,8 @@
 	 */
 }
 
+
+
 {
 	this.a = 20; 
 	var test = {    
@@ -43,6 +45,8 @@
      * 50
      */
 }
+
+
 
 {
 	this.a = 20; 
@@ -70,6 +74,8 @@
      */
 }
 
+
+
 {
 	function test(){    
 		var a = "yideng";    
@@ -82,6 +88,8 @@
 	 * 不会被回收，因为形成闭包  子函数引用上层函数的变量
 	 */
 }
+
+
 
 
 {
@@ -99,6 +107,8 @@
 	 * 报错
 	 */
 }
+
+
 
 
 {
@@ -128,6 +138,9 @@
 }
 
 
+
+
+
 {
 	// 请写出你了解的ES6元编程。（10分） 
 	/**
@@ -136,6 +149,8 @@
 	 * Proxy
 	 */
 }
+
+
 
 {
 	const timeout = ms => new Promise((resolve, reject) => {        
@@ -156,17 +171,11 @@
     	return 3;    
 	});
 	const mergePromise = async (ajaxArray) =>{
-		// let resultlist = []
-		// for(let item of ajaxArray){
-		// 	resultlist = [..resultlist,await item()]
-		// }
-		// return resultlist
-
-		return ajaxArray.reduce((result,item)=>{
-			return result.then((d)=>{
-				item()
-			})
-		},Promise.resolve())
+		let resultlist = []
+		for(let item of ajaxArray){
+			resultlist = [...resultlist,await item()]
+		}
+		return resultlist
 
 	};
 	mergePromise([ajax1, ajax2, ajax3]).then(data => {    
@@ -175,6 +184,8 @@
 	});
 	// 执行结果为： 1  2  3 done [1,2,3] 
 }
+
+
 
 {
 	const timeout = ms => new Promise((resolve, reject) => {        
@@ -214,6 +225,9 @@
 	});
 	// 执行结果为： 1  2  3 done [1,2,3] 
 }
+
+
+
 
 {	
 	/**
@@ -273,9 +287,40 @@
 }
 
 
+
+
 {
 	//9.请用ES5实现ES6 Promise的原理
+	function Promise(executor){
+	    let self = this
+	    self.value = undefined
+	    self.reason = undefined
+	    self.status = 'pending'
+	    function resolve(value){
+	        self.value = value
+	        self.status = 'resolved'
+	    }
+	    
+	    function reject(reason){
+	        self.reason = reason
+	        self.status = 'rejected'
+	    }
+	    executor(resolve,reject)
+	}
+
+	Promise.prototype.then = function(onFulfilled,onRejected){
+	    let self = this
+	    if(self.status === 'resolved'){
+	        onFulfilled(self.value)
+	    }
+	    
+	    if(self.status === 'rejected'){
+	        onRejected(self.reason)
+	    }
+	}
 }
+
+
 
 
 {
@@ -292,10 +337,13 @@
    		arr.push(pusher);    
    		arr = tmp; 
    	} 
-	   console.log(s[0]);
-	   /**
-		* {value: "item"0,children: []}
-	    */
+	console.log(s[0]);
+
+    // {value: "item0",children: [
+    // 	{value: "item1",children: [
+    // 		{value: "item2"}
+    // 	]}
+    // ]}
 }
 
 
