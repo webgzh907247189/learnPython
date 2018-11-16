@@ -289,8 +289,8 @@
 			tmp = []        
 			pusher.children = tmp    
 		} 
-   		arr.push(pusher);    
-   		arr = tmp; 
+   		arr.push(pusher);
+   		arr = tmp;
    	} 
 	   console.log(s[0]);
 	   /**
