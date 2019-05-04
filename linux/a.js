@@ -27,6 +27,15 @@ find -name xxx 查找文件夹
 
 
 
+
+查看当前项目包下指定文件*.js  ->  find . -name "*.js"
+
+linux 批量删除指定类型文件  ->  删除python文件  ->  find . -name "*.js" |xargs rm -rfv
+
+
+
+
+
 创建： 
 编辑完成后按ESC，然后输入:q就是退出;还有:wq是保存后退出，加感叹号是表示强制
 touch aa.js  创建一个文件
